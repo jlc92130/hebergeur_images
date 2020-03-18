@@ -13,6 +13,48 @@
 <body>
 
 <div class="container" >
+  <div class="alert alert-primary mx-auto mt-4 text-center" style="height:200px; width:600px;">
+    <h1 class="mt-1">Heberger votre image</h1>
+
+    <?php
+
+    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+      $error = 1;
+      if ( $_FILES['image']['size'] < 3000000) {
+        $informationsImage = pathinfo($_FILES['image']['name']);
+        $imageExtension = $informationsImage['extension'];
+        $extensions = array('jpg','jpeg','png');
+        if (in_array($imageExtension,$extensions)) {
+          $adresse = 'serveur/'.time().rand().'.'.$imageExtension;
+          //send img on server
+          move_uploaded_file($_FILES['image']['tmp_name'],$adresse);
+          $error = 0;
+
+        }else{
+          echo 'l image n\'est pas au bon format';
+        }
+      }else {
+        echo 'Le fichier est trop volumineux';
+      }
+
+    } else {
+      echo 'L image n\'a pas été téléchargée';
+    }
+    ?>
+      <form method="post" action="index.php" enctype="multipart/form-data">
+          <?php
+            if (isset($error) && $error == 0) {
+
+          ?>
+              <div class="m-2" style="background: white"> <?php echo $adresse ?> </div>
+          <?php
+            }
+            ?>
+
+              <input class="mb-4" type="file" required name="image" /><br />
+              <button type="submit">Héberger</button>
+          </form>
+
 
 </div>
 
