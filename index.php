@@ -13,8 +13,9 @@
 <body>
 
 <div class="container" >
-  <div class="alert alert-primary mx-auto mt-4 text-center" style="height:200px; width:600px;">
+  <div class="alert alert-primary mx-auto mt-4 text-center" style="height:400px; width:600px;">
     <h1 class="mt-1">Heberger votre image</h1>
+
 
     <?php
 
@@ -41,21 +42,25 @@
       echo 'L image n\'a pas été téléchargée';
     }
     ?>
+
+    <?php
+      if (isset($error) && $error == 0) {
+    ?>
+        <div>
+          <img src="<?php echo $adresse ?>" id="image" />
+          <div class="m-2" style="background: white"> <?php echo 'localhost/jl/php/hebergeur_images/'.$adresse ?> </div>
+        </div>
+    <?php
+      }
+      ?>
+
       <form method="post" action="index.php" enctype="multipart/form-data">
-          <?php
-            if (isset($error) && $error == 0) {
-
-          ?>
-              <div class="m-2" style="background: white"> <?php echo $adresse ?> </div>
-          <?php
-            }
-            ?>
-
               <input class="mb-4" type="file" required name="image" /><br />
               <button type="submit">Héberger</button>
-          </form>
+      </form>
 
 
+</div>
 </div>
 
 
